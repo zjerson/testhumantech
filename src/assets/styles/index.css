@@ -1,0 +1,13 @@
+body,
+html,
+#root {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.active-route {
+    background-color: #E0E1E3;
+    color: #D9393A;
+    font-weight: 500;
+    transition: all 100ms linear;
+}
