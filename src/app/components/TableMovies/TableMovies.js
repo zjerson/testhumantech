@@ -1,10 +1,12 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Components
+import ButtonsMovie from './ButtonsMovie';
+
 const TableMovies = (props) => {
 
-    const { dataSource } = props;
+    const { dataSource, onEditMovie, onDeleteMovie } = props;
 
     const dateToString = (strDate) => {
         return (new Date(strDate)).toLocaleString();
@@ -15,8 +17,8 @@ const TableMovies = (props) => {
             <td>{movie.id}</td>
             <td>{movie.name}</td>
             <td>{dateToString(movie.pub_date)}</td>
-            <td>{movie.state}</td>
-            <td>options</td>
+            <td>{movie.state === 'active' ? 'activo' : 'inactivo' }</td>
+            <td><ButtonsMovie onEdit={() => onEditMovie(movie)} onDelete={() => onDeleteMovie(movie)} /></td>
         </tr>
     ));
 

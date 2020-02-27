@@ -3,6 +3,7 @@
 import MOVIES from "app/mocks/movies.data";
 
 class Movies {
+    counterMovie = 1000;
     constructor() {
         if (!Movies.instance) { Movies.instance = this; }
         return Movies.instance;
@@ -10,7 +11,7 @@ class Movies {
 
     findAll() {
         return new Promise((resolve, reject) => {
-            setTimeout(function () {
+            setTimeout(() => {
                 resolve(MOVIES);
                 // resolve([]);
                 // reject(true);
@@ -19,12 +20,25 @@ class Movies {
         // return ApiBaseService.get(`resources/caso/${id}`);
     }
 
-    create(body) {
-        // return ApiBaseService.post('resources/caso/crear', body);
+    create(payload) {
+        this.counterMovie = this.counterMovie + 100;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({ ...payload, id: this.counterMovie });
+                // resolve([]);
+                // reject(true);
+            }, 3000);
+        });
     }
 
-    update(id, body) {
-        // return ApiBaseService.put(`resources/caso/editar/${id}`, body);
+    update(id, payload) {
+        return new Promise((resolve, reject) => {
+            setTimeout(function () {
+                resolve(payload);
+                // resolve([]);
+                // reject(true);
+            }, 3000);
+        });
     }
 
     delete(id) {

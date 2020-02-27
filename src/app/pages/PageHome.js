@@ -36,27 +36,54 @@ const PageHome = (props) => {
 
         getDataSource();
 
-
-        // return () => {
-        //   abortController.abort();
-        // }
+        return () => {
+            // abortController.abort();
+        }
 
     }, []);
 
 
-    const handleCreateMovie = () => {
+    // handleOk modal
+    const handleOk = (mode, movie) => {
+        let _data = [];
+        switch (mode) {
+            case 'create':
+                _data = [...dataSource]
+                _data.push(movie);
+                break;
+            case 'update':
+                _data = dataSource.map(_movie => (_movie.id === movie.id) ? movie : _movie);
+                break;
+            default: break;
+        };
+        setDataSource(_data);
+        handleClose();
+    }
+
+    const handleEditMovie = (movie) => {
+        setCurrentMovie(movie);
         setIsOpenModalMovie(true);
+    };
+
+    const handleDeleteMovie = (movie) => {
+        //Here you can all Modal Confirmation
+        const _filteredList = dataSource.filter(_movie => _movie.id !== movie.id);
+        setDataSource(_filteredList);
+    };
+
+    const handleClose = () => {
+        setCurrentMovie(null);
+        setIsOpenModalMovie(false);
     }
 
     const displayContent = (loading, isError, dataSource) => {
-
         if (loading) return <LoaderContent />;
 
         if (isError) return <Error />
 
         if (!dataSource.length) return <EmptyData />
 
-        return <TableMovies dataSource={dataSource} />
+        return <TableMovies dataSource={dataSource} onEditMovie={handleEditMovie} onDeleteMovie={handleDeleteMovie} />
 
     };
 
@@ -64,12 +91,17 @@ const PageHome = (props) => {
         <div className='p-10 text-center'>
             <div className='flex justify-between items-center mb-4'>
                 <h1 className='text-2xl font-bold'>Películas</h1>
-                <button className='py-1 px-6 bg-blue-600 rounded-sm text-white' onClick={handleCreateMovie}>Nueva Pelicula</button>
+                <button className='py-1 px-6 bg-blue-600 rounded-sm text-white' onClick={() => setIsOpenModalMovie(true)}>Nueva Pelicula</button>
             </div>
             <div>
                 {displayContent(loading, isError, dataSource)}
             </div>
-            {isOpenModalMovie  ? <ModalUpsertMovie isOpen={isOpenModalMovie} /> : null}
+            <ModalUpsertMovie
+                isOpen={isOpenModalMovie}
+                movie={currentMovie}
+                onClose={handleClose}
+                onOk={handleOk}
+            />
         </div>
     )
 };

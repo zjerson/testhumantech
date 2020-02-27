@@ -2,15 +2,16 @@ import React from 'react';
 import Modal from 'react-modal';
 import PropTypes from 'prop-types';
 
-
+// alternative styled-components
 import './JModalLayout.css';
 
 const JModalLayout = (props) => {
 
     Modal.setAppElement('#root');
 
-    const { isOpen, onClose, children,  title, footer, size } = props;
+    const { isOpen, onClose, children, title, footer, size, onOk } = props;
 
+    /* Modal config */
     const configModal = {
         isOpen: isOpen,
         overlayClassName: 'jOverlay',
@@ -34,12 +35,13 @@ const JModalLayout = (props) => {
     /* Footer Config */
     let ModalFooter = (
         <div className='jPopup__footer'>
-            <button className='mr-2 hover-close' onClick={onClose}>
-                Salir
+            <button className='mr-2 hover-close' onClick={onOk}>
+                Guardar
             </button>
         </div>
     );
 
+    // Check if exits Footer
     if (typeof (footer) === 'boolean') ModalFooter = null;
     if (typeof (footer) === 'object') ModalFooter = (<div className='jPopup__footer'>{footer}</div>);
 

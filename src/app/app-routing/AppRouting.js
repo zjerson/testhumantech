@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-
+// Components
 import AppSidebar from 'app/components/AppSidebar';
 import AppHeader from 'app/components/AppHeader/AppHeader';
 
+// Pages
 import PageHome from 'app/pages/PageHome';
 import PageMovies from 'app/pages/PageMovies';
 import PageShifts from 'app/pages/PageShifts';
@@ -42,6 +43,6 @@ const AppRouting = () => {
             </div>
         </Router>
     )
-}
+};
 
 export default AppRouting;
